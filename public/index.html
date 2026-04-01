@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Local Dev Template</title>
+        <link rel="stylesheet" href="./css/style.css" />
+    </head>
+    <body>
+        <main class="container">
+            <h1>ローカル開発テンプレート:サーバー構築検証用</h1>
+
+            <section class="card">
+                <h2>① ユーザーを登録してみましょう♪</h2>
+                <form id="user-form">
+                    <label>
+                        ユーザー名
+                        <input type="text" id="name" name="name" required />
+                    </label>
+                    <label>
+                        メールアドレス
+                        <input type="email" id="email" name="email" required />
+                    </label>
+                    <button type="submit">登録する</button>
+                </form>
+            </section>
+
+            <section class="card">
+                <h2>② ユーザーを検索することができます！</h2>
+                <input type="text" id="search" placeholder="ユーザー名またはメールアドレスで検索" />
+                <button id="reload-button">検索する</button>
+            </section>
+            
+            <section class="card">
+                <h2>③ ユーザーの一覧を確認できます。</h2>
+                <div id="status"></div>
+                <ul id="user-list"></ul>
+            </section>
+        </main>
+
+        <script type="module" src="/js/app.js"></script>
+    </body>
+</html>
