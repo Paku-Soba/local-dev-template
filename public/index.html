@@ -13,14 +13,18 @@
             <section class="card">
                 <h2>① ユーザーを登録してみましょう♪</h2>
                 <form id="user-form">
+                    <div>
                     <label>
                         ユーザー名
                         <input type="text" id="name" name="name" required />
                     </label>
+                    </div>
+                    <div>
                     <label>
                         メールアドレス
                         <input type="email" id="email" name="email" required />
                     </label>
+                </div>
                     <button type="submit">登録する</button>
                 </form>
             </section>
@@ -28,12 +32,12 @@
             <section class="card">
                 <h2>② ユーザーを検索することができます！</h2>
                 <input type="text" id="search" placeholder="ユーザー名またはメールアドレスで検索" />
-                <button id="reload-button">検索する</button>
+                <button id="reload-button">再読込み</button>
             </section>
             
             <section class="card">
                 <h2>③ ユーザーの一覧を確認できます。</h2>
-                <div id="status"></div>
+                <div id="data-status"></div>
                 <ul id="user-list"></ul>
             </section>
         </main>
