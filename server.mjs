@@ -103,7 +103,7 @@ async function saveUsers(users) {
 // node標準機能を使ってサーバー構築
 const server = http.createServer(async (req, res) => {
     try {
-        const url = new URL(req.url, `http://${req.headers,host || `${HOST}:${PORT}`}`);
+        const url = new URL(req.url, `http://${req.headers.host || `${HOST}:${PORT}`}`);
         const { pathname, searchParams } = url;
 
         if (pathname === '/api/health' && req.method === 'GET'){
@@ -137,6 +137,7 @@ const server = http.createServer(async (req, res) => {
             }
             const users = await getUsers();
             const newUser = {
+                //新しいデータにユニークな識別子を付与する※データ整合性をとるためのインフラ機能
                 id: crypto.randomUUID(),
                 name: String(parsed.name),
                 email: String(parsed.email),
