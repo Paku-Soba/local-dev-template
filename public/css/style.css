@@ -47,8 +47,22 @@ button {
     color: white;
 }
 
-#data-status {
+#submit-status{
     margin-bottom: 12px;
     font-size: 14px;
+    color: #3154c0;
 }
+
+#data-status {
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: #3154c0;
+}
+
+#user-list {
+    font-size: 18px;
+    color: #4A5568;
+}
+
+
 

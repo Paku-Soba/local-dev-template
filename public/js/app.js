@@ -1,5 +1,6 @@
 const form = document.getElementById('user-form');
 const userList = document.getElementById('user-list');
+const submitStaus = document.getElementById('submit-status');
 const dataStatus = document.getElementById('data-status');
 const search = document.getElementById('search');
 const reloadButton = document.getElementById('reload-button');
@@ -63,10 +64,10 @@ form.addEventListener('submit', async event => {
         }
 
         form.reset();
-        dataStatus.textContent = `登録成功：${result.name}`;
+        submitStaus.textContent = `ユーザー名：${result.name} 登録に成功しました。`;
         await loadUsers();
     } catch (error) {
-        dataStatus.textContent = `登録失敗：${error.message}`;
+        submitStaus.textContent = `ユーザー登録に失敗しました。：${error.message}`;
     }
 });
 
