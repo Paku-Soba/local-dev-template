@@ -6,7 +6,9 @@ const reloadButton = document.getElementById('reload-button');
 
 //ユーザー情報を取得する機能
 async function loadUsers() {
-    const query = search.ariaValueMax.trim();
+    //指定したinputID要素の値取得を確認する
+    console.log(search.value);
+    const query = search.value.trim();
     const url = query? `/api/users?q=${encodeURIComponent(query)}`:'/api/users';
 
     dataStatus.textContent = '読み込み中...';
