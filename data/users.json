@@ -40,5 +40,11 @@
     "name": "multuser",
     "email": "multuser@example.com",
     "createdAt": "2026-04-07T06:18:37.586Z"
+  },
+  {
+    "id": "8c94e5f9-0512-4588-8841-95287fb167df",
+    "name": "graphical target",
+    "email": "graphical@example.com",
+    "createdAt": "2026-04-07T06:27:33.782Z"
   }
 ]
