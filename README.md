@@ -6,11 +6,11 @@ Local Development
 プロジェクト構成の全体像及びコード内容は、ChatGPTプロンプト実行による回答結果を参照。
 
 # Goal
-・静的HTML/CSS/JSの表示
-・APIのモック提供
-・JSONの読み書き
-・フォーム送信
-・ローカつでの画面遷移確認
-・開発用の簡易ルーティング
-・CORSやContent-Typeの制御
+- 静的HTML/CSS/JSの表示
+- APIのモック提供
+- JSONの読み書き
+- フォーム送信
+- ローカルでの画面遷移確認
+- 開発用の簡易ルーティング
+- CORSやContent-Typeの制御
 フレームワークなしで「画面」と「API」を同一Nodeプロセス上で持つ
