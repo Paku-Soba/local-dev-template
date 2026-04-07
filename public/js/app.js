@@ -2,7 +2,7 @@ const form = document.getElementById('user-form');
 const userList = document.getElementById('user-list');
 const dataStatus = document.getElementById('data-status');
 const search = document.getElementById('search');
-const reloadButton = document.getElementById('reload-Button');
+const reloadButton = document.getElementById('reload-button');
 
 //ユーザー情報を取得する機能
 async function loadUsers() {
