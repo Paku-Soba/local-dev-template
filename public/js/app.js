@@ -1,5 +1,6 @@
 const form = document.getElementById('user-form');
 const userList = document.getElementById('user-list');
+const userTableList = document.getElementById('user-table');
 const submitStaus = document.getElementById('submit-status');
 const dataStatus = document.getElementById('data-status');
 const search = document.getElementById('search');
@@ -19,6 +20,7 @@ async function loadUsers() {
         const users = await response.json();
 
         userList.innerHTML= '';
+        userTableList.innerHTML= '';
 
         if (!Array.isArray(users) || users.length === 0) {
             dataStatus.textContent = 'ユーザーが見つかりません。';
@@ -26,12 +28,22 @@ async function loadUsers() {
         }
 
         dataStatus.textContent = `${users.length}件取得しました。`;
-
+        // ユーザー情報をリストに表示するロジック
         for(const user of users) {
             const li = document.createElement('li');
             li.textContent = `${user.name}(${user.email})`;
             userList.appendChild(li);
         }
+        // リストで表示したユーザー情報をテーブルに表示するロジック
+        for(const user of users) {
+            const userName = document.createElement('td');
+            const userEmail = document.createElement('td');
+            userName.textContent = `${user.name}`;
+            userEmail.textContent = `${user.email}`;
+            userTableList.appendChild(userName);
+            userTableList.appendChild(userEmail);
+        }
+
     } catch (error) {
         dataStatus.textContent = `取得失敗：${error.message}`;
     }
@@ -80,5 +92,9 @@ search.addEventListener('input', () => {
 reloadButton.addEventListener('click',() => {
     loadUsers();
 });
+
+// ユーザー情報を更新する機能
+
+
 
 loadUsers();
