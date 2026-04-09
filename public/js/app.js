@@ -20,7 +20,6 @@ async function loadUsers() {
         const users = await response.json();
 
         userList.innerHTML= '';
-        userTableList.innerHTML= '';//初期化
 
         if (!Array.isArray(users) || users.length === 0) {
             dataStatus.textContent = 'ユーザーが見つかりません。';
@@ -28,28 +27,46 @@ async function loadUsers() {
         }
 
         dataStatus.textContent = `${users.length}件取得しました。`;
-        // ユーザー情報をリストに表示するロジック
-        for(const user of users) {
-            const li = document.createElement('li');
-            li.textContent = `${user.name}(${user.email})`;
-            userList.appendChild(li);
-        }
-        // リストで表示したユーザー情報をテーブルに表示するロジック
-        for(const user of users) {
+        // TODO. 編集ができるようにテーブル表示方法を改善してみよう
+        // ① テンプレート関数化:1レコードをどう描画するか担当する
+        function createUserRow(user) {
             const tr = document.createElement('tr');
+            tr.dataset.id = `${user.id}`;
 
             const tdName = document.createElement('td');
             tdName.textContent = `${user.name}`;
+
             const tdEmail = document.createElement('td');
             tdEmail.textContent = `${user.email}`;
-            
-            //DOM操作の基本型:<td>は<tr>の子要素
-            tr.appendChild(tdName);
-            tr.appendChild(tdEmail);
-            //<td>を追加した<tr>を<tbody>に追加する
-            userTableList.appendChild(tr);
-        }
 
+            const tdAction = document.createElement('td');
+            const editCheckBox = document.createElement('input');
+            editCheckBox.type = 'checkbox';
+
+            editCheckBox.addEventListener('click', () => {
+                console.log('編集対象ユーザーID:', user.id);
+            });
+
+            tdAction.appendChild(editCheckBox);
+            //親要素である<tr>に、作成した子要素<td>を追加する
+            tr.append(tdName,tdEmail,tdAction);
+
+            return tr;
+        }
+        // ② パフォーマンス改善:DOM反映を一括で行う役割を担当する
+        function renderUserTable(users, userTableList) {
+            const fragment = document.createDocumentFragment();
+
+            for (const user of users) {
+                // 
+                const row = createUserRow(user);
+                fragment.appendChild(row);
+            }
+            userTableList.innerHTML= '';//初期化
+            userTableList.appendChild(fragment);
+        }
+        // DOM反映を一括で行うメソッドを呼び出し
+        renderUserTable(users, userTableList);
     } catch (error) {
         dataStatus.textContent = `取得失敗：${error.message}`;
     }
