@@ -42,11 +42,21 @@ async function loadUsers() {
             const tdAction = document.createElement('td');
             const editCheckBox = document.createElement('input');
             editCheckBox.type = 'checkbox';
-
-            editCheckBox.addEventListener('click', () => {
+            
+            // TODO. チェックボックスクリック時に1つだけ選択できるように制御する
+            [editCheckBox].forEach((item) => {
+                console.log(item)
+                item.addEventListener('click', () => {
                 console.log('編集対象ユーザーID:', user.id);
+                    if(item.checked) {
+                    [editCheckBox].forEach((allChecks) => {
+                        allChecks.checked = false;
+                    });
+                    item.checked = true;
+                }
             });
-
+            });
+        
             tdAction.appendChild(editCheckBox);
             //親要素である<tr>に、作成した子要素<td>を追加する
             tr.append(tdName,tdEmail,tdAction);
