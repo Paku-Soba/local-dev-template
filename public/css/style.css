@@ -51,6 +51,14 @@ button {
     color: white;
 }
 
+table {
+    margin: 20px;
+}
+
+legend {
+    color: #4A5568;
+}
+
 #submit-status{
     margin-bottom: 12px;
     font-size: 14px;
