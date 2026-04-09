@@ -20,7 +20,7 @@ async function loadUsers() {
         const users = await response.json();
 
         userList.innerHTML= '';
-        userTableList.innerHTML= '';
+        userTableList.innerHTML= '';//初期化
 
         if (!Array.isArray(users) || users.length === 0) {
             dataStatus.textContent = 'ユーザーが見つかりません。';
@@ -36,12 +36,18 @@ async function loadUsers() {
         }
         // リストで表示したユーザー情報をテーブルに表示するロジック
         for(const user of users) {
-            const userName = document.createElement('td');
-            const userEmail = document.createElement('td');
-            userName.textContent = `${user.name}`;
-            userEmail.textContent = `${user.email}`;
-            userTableList.appendChild(userName);
-            userTableList.appendChild(userEmail);
+            const tr = document.createElement('tr');
+
+            const tdName = document.createElement('td');
+            tdName.textContent = `${user.name}`;
+            const tdEmail = document.createElement('td');
+            tdEmail.textContent = `${user.email}`;
+            
+            //DOM操作の基本型:<td>は<tr>の子要素
+            tr.appendChild(tdName);
+            tr.appendChild(tdEmail);
+            //<td>を追加した<tr>を<tbody>に追加する
+            userTableList.appendChild(tr);
         }
 
     } catch (error) {
