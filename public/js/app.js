@@ -44,25 +44,19 @@ async function loadUsers() {
             editCheckBox.type = 'checkbox';
             
             // TODO. チェックボックスクリック時に1つだけ選択できるように制御する
-            // [editCheckBox].forEach((item) => {
-                // console.log(item)
-                // item.addEventListener('click', () => {
                 editCheckBox.addEventListener('click', () => {
-                //イベント発火確認: console上編集対象ユーザーID表示確認
-                console.log('編集対象ユーザーID:', user.id);
-                    //このロジックが機能していないことを判明
-                    // console.log('checkboxのchecked:',item.checked)
-                    // if(item.checked) {
                     // 全てのチェックボックスを取得する方法を検証
                     const allCheckBox = document.querySelectorAll('input[type="checkbox"]');
-                    [allCheckBox].forEach((allChecked,index) => {
-                        console.log('データ内容確認:',allChecked)
-                        console.log(`${index}番目のチェック状態:`,allChecked.checked);
+                    allCheckBox.forEach((checkbox, index)=> {
+                        console.log('データ内容確認:',checkbox);
+                        console.log(`${index}番目のチェック状態:`,checkbox.checked);
+                        if (checkbox !== editCheckBox) {
+                            checkbox.checked = false;
+                        }
                     }); 
-                    //     item.checked = true;
-                    // }
+                    //イベント発火確認: console上編集対象ユーザーID表示確認
+                    console.log('編集対象ユーザーID:', user.id);
             });
-            // });
         
             tdAction.appendChild(editCheckBox);
             //親要素である<tr>に、作成した子要素<td>を追加する
