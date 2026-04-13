@@ -41,23 +41,13 @@ async function loadUsers() {
 
             const tdAction = document.createElement('td');
             const editCheckBox = document.createElement('input');
-            editCheckBox.type = 'checkbox';
+            editCheckBox.type = 'radio';
+            // radioはnameでグループ化されて初めて機能する
+            editCheckBox.name = 'user-select';
             
-            // TODO. チェックボックスクリック時に1つだけ選択できるように制御する
-                editCheckBox.addEventListener('click', () => {
-                    // 全てのチェックボックスを取得する方法を検証
-                    const allCheckBox = document.querySelectorAll('input[type="checkbox"]');
-                    allCheckBox.forEach((checkbox, index)=> {
-                        console.log('データ内容確認:',checkbox);
-                        console.log(`${index}番目のチェック状態:`,checkbox.checked);
-                        if (checkbox !== editCheckBox) {
-                            checkbox.checked = false;
-                        }
-                    }); 
-                    //イベント発火確認: console上編集対象ユーザーID表示確認
-                    console.log('編集対象ユーザーID:', user.id);
+            editCheckBox.addEventListener('click', () => {
+                console.log('編集対象ユーザーID:', user.id);
             });
-        
             tdAction.appendChild(editCheckBox);
             //親要素である<tr>に、作成した子要素<td>を追加する
             tr.append(tdName,tdEmail,tdAction);
