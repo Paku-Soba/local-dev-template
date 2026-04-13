@@ -41,6 +41,9 @@
                 <div id="data-status"></div>
                 <ul id="user-list"></ul>
                 <h3>TODO. ユーザー情報をテーブルで表示してみよう</h3>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button id="open-edit-modal-button">編集する</button>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -52,6 +55,12 @@
                     <tbody id="user-table">
                     </tbody>
                 </table>
+                <dialog id="edit-modal">
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button id="close-modal">閉じる</button>
+                    </div>
+                    <p>モーダルダイアログ表示されたよ♪</p>
+                </dialog>
                 <form>
                     <fieldset>
                         <legend>１つだけ選択できるかラジオボタンを確認する</legend>

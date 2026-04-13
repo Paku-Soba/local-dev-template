@@ -5,6 +5,10 @@ const submitStaus = document.getElementById('submit-status');
 const dataStatus = document.getElementById('data-status');
 const search = document.getElementById('search');
 const reloadButton = document.getElementById('reload-button');
+//編集するモーダル関連要素
+const openEditModalButton = document.getElementById('open-edit-modal-button');
+const editModal = document.getElementById('edit-modal');
+const closeEditModalButton = document.getElementById('close-modal');
 
 //ユーザー情報を取得する機能
 async function loadUsers() {
@@ -117,8 +121,16 @@ reloadButton.addEventListener('click',() => {
     loadUsers();
 });
 
+// 編集するボタンをクリックするとモーダル表示する機能
+openEditModalButton.addEventListener('click',() => {
+    editModal.showModal();
+})
+
+// モーダルを閉じる機能
+closeEditModalButton.addEventListener('click',() => {
+    editModal.close();
+})
+
 // ユーザー情報を更新する機能
-
-
 
 loadUsers();
