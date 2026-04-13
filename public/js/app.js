@@ -11,6 +11,7 @@ const editModal = document.getElementById('edit-modal');
 const editUserId = document.getElementById('edit-user-id');
 const editUserName = document.getElementById('edit-name');
 const editUserEmail = document.getElementById('edit-email');
+const editSubmit = document.getElementById('edit-submit');
 const closeEditModalButton = document.getElementById('close-modal');
 
 //ユーザー情報を取得する機能
@@ -100,7 +101,6 @@ async function loadUsers() {
             editUserId.value = seletedUser.id;
             editUserName.value = seletedUser.name;
             editUserEmail.value = seletedUser.email;
-
             editModal.showModal();
         })
     } catch (error) {
@@ -157,6 +157,37 @@ closeEditModalButton.addEventListener('click',() => {
     editModal.close();
 });
 
+// TODO. モーダルダイアログの「保存」ボタンをクリックしたらユーザー情報を更新する
 // ユーザー情報を更新する機能
+editSubmit.addEventListener('submit', async event => {
+   event.preventDefault();
+
+   const userId = editUserId.value;
+   const payload = {
+    name: editUserName.value.trim(),
+    email: editUserEmail.value.trim()
+   };
+   console.log('編集するユーザー情報確認:',userId,payload);
+
+   // DBとのデータの整合性はどのタイミングで行うのか？
+
+   try {
+    // 更新API呼び出し_サーバーとの通信が発生する
+    const response = await fetch(`/api/users/${encodeURIComponent(userId)}`, {
+        method: 'PATCH',
+        headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+    const editResult = await response.json();
+    if (!response.ok) {
+            throw new Error (editResult.error || '編集に失敗しました。');
+        }
+
+   } catch (error) {
+
+   }
+})
 
 loadUsers();
