@@ -60,11 +60,12 @@
                         <button id="close-modal">×</button>
                     </div>
                     <h3>TODO.編集可能なフォームを作成しよう</h3>
-                    <h2>ユーザーの編集ができます。</h2>
+                    <h2>メールアドレスの編集ができます。</h2>
                     <form id="edit-user-form">
+                        <input type="hidden" id="edit-user-id" name="id" />
                         <label>
                             ユーザー名
-                            <input type="text" id="edit-name" name="name" />
+                            <input type="text" id="edit-name" name="name" disabled />
                         </label>
                         <label>
                             メールアドレス

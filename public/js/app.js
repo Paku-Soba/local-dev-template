@@ -8,6 +8,9 @@ const reloadButton = document.getElementById('reload-button');
 //編集するモーダル関連要素
 const openEditModalButton = document.getElementById('open-edit-modal-button');
 const editModal = document.getElementById('edit-modal');
+const editUserId = document.getElementById('edit-user-id');
+const editUserName = document.getElementById('edit-name');
+const editUserEmail = document.getElementById('edit-email');
 const closeEditModalButton = document.getElementById('close-modal');
 
 //ユーザー情報を取得する機能
@@ -93,6 +96,11 @@ async function loadUsers() {
                 alert('選択したユーザーが存在しません。');
                 return;
             }
+            // 編集可能なフォームに選択したユーザー情報を渡す
+            editUserId.value = seletedUser.id;
+            editUserName.value = seletedUser.name;
+            editUserEmail.value = seletedUser.email;
+
             editModal.showModal();
         })
     } catch (error) {
