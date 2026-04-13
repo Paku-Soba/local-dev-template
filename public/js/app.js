@@ -73,6 +73,28 @@ async function loadUsers() {
         }
         // DOM反映を一括で行うメソッドを呼び出し
         renderUserTable(users, userTableList);
+
+        // TODO. ラジオボタンで選択したユーザー情報をモーダルダイアログに渡す
+        // 編集するボタンをクリックするとモーダル表示する機能
+        openEditModalButton.addEventListener('click',() => {
+            //　ラジオボタンで選択したユーザーを取得する
+            const selectedEditRadio = document.querySelector('input[name="user-select"]:checked');
+            console.log('選択したユーザーを確認:',selectedEditRadio);
+
+            if(!selectedEditRadio) {
+                alert('編集するユーザーを選択してください。');
+                return;
+            }
+            const selectedUserId = selectedEditRadio.value;
+            // フロントのメモリ上のusers配列から選択したユーザー情報の存在確認を行う
+            const seletedUser = users.find(user => user.id === selectedUserId);
+            console.log('モーダル表示前に選択したユーザー情報が存在するか確認:',seletedUser);
+            if (!seletedUser) {
+                alert('選択したユーザーが存在しません。');
+                return;
+            }
+            editModal.showModal();
+        })
     } catch (error) {
         dataStatus.textContent = `取得失敗：${error.message}`;
     }
@@ -122,21 +144,10 @@ reloadButton.addEventListener('click',() => {
     loadUsers();
 });
 
-// 編集するボタンをクリックするとモーダル表示する機能
-openEditModalButton.addEventListener('click',() => {
-    //　選択したユーザーのIDを取得する
-    const selectedEditRadio = document.querySelector('input[name="user-select"]:checked');
-    console.log('選択したユーザーが存在するか確認:',selectedEditRadio);
-    const selectedUserId = selectedEditRadio.value;
-    //　ReferenceError: user is not defined ユーザー情報をどこから渡すのか？
-    // const seletedUser = users.find(user => user.id === selectedUserId);
-    editModal.showModal();
-})
-
 // モーダルを閉じる機能
 closeEditModalButton.addEventListener('click',() => {
     editModal.close();
-})
+});
 
 // ユーザー情報を更新する機能
 
