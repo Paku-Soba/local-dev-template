@@ -57,9 +57,24 @@
                 </table>
                 <dialog id="edit-modal">
                     <div style="display: flex; justify-content: flex-end;">
-                        <button id="close-modal">閉じる</button>
+                        <button id="close-modal">×</button>
                     </div>
-                    <p>モーダルダイアログ表示されたよ♪</p>
+                    <h3>TODO.編集可能なフォームを作成しよう</h3>
+                    <h2>ユーザーの編集ができます。</h2>
+                    <form id="edit-user-form">
+                        <label>
+                            ユーザー名
+                            <input type="text" id="edit-name" name="name" />
+                        </label>
+                        <label>
+                            メールアドレス
+                            <input type="email" id="edit-email" name="email" required />
+                        </label>
+                        <div style="display: flex; justify-content: center; gap: 10px;">
+                            <button style="background-color: darkgray;">キャンセル</button>
+                            <button>保存</button>
+                        </div>
+                    </form>
                 </dialog>
                 <form>
                     <fieldset>

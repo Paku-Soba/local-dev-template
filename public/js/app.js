@@ -44,15 +44,17 @@ async function loadUsers() {
             tdEmail.textContent = `${user.email}`;
 
             const tdAction = document.createElement('td');
-            const editCheckBox = document.createElement('input');
-            editCheckBox.type = 'radio';
+            const editCheckRadio = document.createElement('input');
+            editCheckRadio.type = 'radio';
             // radioはnameでグループ化されて初めて機能する
-            editCheckBox.name = 'user-select';
+            editCheckRadio.name = 'user-select';
+            editCheckRadio.value = user.id;
             
-            editCheckBox.addEventListener('click', () => {
+            editCheckRadio.addEventListener('click', () => {
                 console.log('編集対象ユーザーID:', user.id);
+                console.log('ユーザーIDが入っているか値確認:', editCheckRadio.value);
             });
-            tdAction.appendChild(editCheckBox);
+            tdAction.appendChild(editCheckRadio);
             //親要素である<tr>に、作成した子要素<td>を追加する
             tr.append(tdName,tdEmail,tdAction);
 
@@ -63,7 +65,6 @@ async function loadUsers() {
             const fragment = document.createDocumentFragment();
 
             for (const user of users) {
-                // 
                 const row = createUserRow(user);
                 fragment.appendChild(row);
             }
@@ -123,6 +124,12 @@ reloadButton.addEventListener('click',() => {
 
 // 編集するボタンをクリックするとモーダル表示する機能
 openEditModalButton.addEventListener('click',() => {
+    //　選択したユーザーのIDを取得する
+    const selectedEditRadio = document.querySelector('input[name="user-select"]:checked');
+    console.log('選択したユーザーが存在するか確認:',selectedEditRadio);
+    const selectedUserId = selectedEditRadio.value;
+    //　ReferenceError: user is not defined ユーザー情報をどこから渡すのか？
+    // const seletedUser = users.find(user => user.id === selectedUserId);
     editModal.showModal();
 })
 
