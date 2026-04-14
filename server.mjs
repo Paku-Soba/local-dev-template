@@ -114,8 +114,12 @@ const server = http.createServer(async (req, res) => {
             });
         }
         if (pathname === '/api/users' && req.method === 'GET') {
+            console.log(searchParams.get('q'));
+            console.log(pathname);
+            console.log('編集フォーム送信時、このGETAPIを呼び出しているか確認')
             const users = await getUsers();
             const keyword = (searchParams.get('q') || '').toLowerCase();
+            console.log('クエリパラメーターの中身確認:',keyword);
             
             const filtered = keyword
             ? users.filter(user => 
@@ -127,6 +131,7 @@ const server = http.createServer(async (req, res) => {
             return sendJson(res, 200, filtered);
         }
         if (pathname === '/api/users' && req.method === 'POST') {
+            console.log('登録API呼び出し確認')
             const body = await readBody(req);
             const parsed = JSON.parse(body || '{}');
 
@@ -148,6 +153,35 @@ const server = http.createServer(async (req, res) => {
             await saveUsers(users);
 
             return sendJson(res, 201, newUser);
+        }
+        // 更新API作成
+        const pattern = new URLPattern({pathname: '/api/users/:id'});
+        if (pattern === '/api/users/:id' && req.method === 'PATCH'){
+            console.log(pattern.test('/api/users/user01'));
+            const body = await readBody(req);
+            const parsed = JSON.parse(body || '{}');
+
+            if (!parsed.email) {
+                return sendJson(res, 400, {
+                    error: 'email are rquired'
+                });
+            }
+            // data/users.jsonよりユーザー情報を取得
+            const users = await getUsers();
+            // 編集対象のユーザーを探す
+            const targetUser = users.find(user => user.id === id);
+            // 編集対象のユーザーがない場合、404を返す
+            if (!targetUser) {
+                return sendJson(res, 404, { error: 'User not found' });
+            } 
+            targetUser.name = parsed.name;
+            targetUser.email = parsed.email;
+            targetUser.updatedAt = new Date().toISOString();
+            // 編集したユーザーの保存処理ができたのか
+            await saveUsers(users);
+            
+            return sendJson(res, 200, targetUser);
+
         }
         return serveStaticFile(res, pathname);
     } catch(error) {
