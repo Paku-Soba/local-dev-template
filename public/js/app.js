@@ -161,7 +161,7 @@ closeEditModalButton.addEventListener('click',() => {
 // TODO. モーダルダイアログの「保存」ボタンをクリックしたらユーザー情報を更新する
 // ユーザー情報を更新する機能
 editForm.addEventListener('submit', async event => {
-   console.log('イベント呼び出し確認');
+   console.log('更新フォーム送信_イベント呼び出し確認');
     event.preventDefault();
     const userId = editUserId.value;
     const payload = {
@@ -172,7 +172,7 @@ editForm.addEventListener('submit', async event => {
 
    try {
     // 更新API呼び出し_サーバーとの通信が発生する
-    const response = await fetch(`/api/users/${encodeURIComponent(userId)}`, {
+    const response = await fetch(`/api/users`, {
         method: 'PATCH',
         headers: {
                 'Content-Type': 'application/json'
@@ -188,9 +188,12 @@ editForm.addEventListener('submit', async event => {
         }
     // await loadUsers();
    } catch (error) {
+    console.log(error)
     alert(`更新失敗: ${error.message}`);
 
    }
+   editForm.reset();
+// editModal.close();
 })
 
 loadUsers();

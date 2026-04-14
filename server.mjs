@@ -105,6 +105,10 @@ const server = http.createServer(async (req, res) => {
     try {
         const url = new URL(req.url, `http://${req.headers.host || `${HOST}:${PORT}`}`);
         const { pathname, searchParams } = url;
+        // urlパラメータ取得のための検証用
+        // const userIdMatch = pathname.match(/^\/users\/(\d+)$/);
+        // console.log('url確認:',userIdMatch);
+        // nullを返している
 
         if (pathname === '/api/health' && req.method === 'GET'){
             return sendJson(res, 200, {
@@ -155,9 +159,10 @@ const server = http.createServer(async (req, res) => {
             return sendJson(res, 201, newUser);
         }
         // 更新API作成
-        const pattern = new URLPattern({pathname: '/api/users/:id'});
-        if (pattern === '/api/users/:id' && req.method === 'PATCH'){
-            console.log(pattern.test('/api/users/user01'));
+        // サーバ側パス指定の検証用
+        // const pattern = new URLPattern({pathname: '/api/users/:id'});
+        // console.log(pattern.test('/api/users/user01'));
+        if (pathname === '/api/users' && req.method === 'PATCH'){
             const body = await readBody(req);
             const parsed = JSON.parse(body || '{}');
 
