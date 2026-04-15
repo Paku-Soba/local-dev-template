@@ -186,15 +186,19 @@ editForm.addEventListener('submit', async event => {
     console.log('PATCH response:', editResult);
     console.log('response.ok:', response.ok, 'status:',response.status);
     if (!response.ok) {
-            throw new Error (editResult.error || '編集に失敗しました。');
+            throw new Error (editResult.error || 'ユーザー情報の編集ができませんでした。');
         }
-    // await loadUsers();
+    await loadUsers();
    } catch (error) {
     console.log(error)
-    alert(`更新失敗: ${error.message}`);
+    alert(`編集に失敗しました。: ${error.message}`);
 
    }
+   // 更新フォームの値をクリアする
    editForm.reset();
+   // 更新が成功したら、ラジオボタンをクリアする
+   const editCheckRadios = document.querySelectorAll('input[name="user-select"]');
+   editCheckRadios.forEach(radio => radio.checked = false);
    editModal.close();
 })
 
