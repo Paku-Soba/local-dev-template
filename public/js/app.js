@@ -165,6 +165,8 @@ editForm.addEventListener('submit', async event => {
     event.preventDefault();
     const userId = editUserId.value;
     const payload = {
+        //フロント側よりサーバ側へidの渡し方を検証する
+        id: userId,
         name: editUserName.value.trim(),
         email: editUserEmail.value.trim()
     };   
@@ -193,7 +195,7 @@ editForm.addEventListener('submit', async event => {
 
    }
    editForm.reset();
-// editModal.close();
+   editModal.close();
 })
 
 loadUsers();
