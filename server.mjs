@@ -90,6 +90,7 @@ async function serveStaticFile(res,pathname) {
 }
 
 async function getUsers() {
+    //　data/users.jsonのファイルを読み込む
     const filePath = path.join(DATA_DIR, 'users.json');
     const raw = await fs.readFile(filePath, 'utf-8');
     return JSON.parse(raw);   
@@ -165,7 +166,7 @@ const server = http.createServer(async (req, res) => {
         if (pathname === '/api/users' && req.method === 'PATCH'){
             const body = await readBody(req);
             const parsed = JSON.parse(body || '{}');
-
+            console.log('payloadデータ中身確認:',parsed);
             if (!parsed.email) {
                 return sendJson(res, 400, {
                     error: 'email are rquired'
@@ -173,8 +174,10 @@ const server = http.createServer(async (req, res) => {
             }
             // data/users.jsonよりユーザー情報を取得
             const users = await getUsers();
-            // 編集対象のユーザーを探す
-            const targetUser = users.find(user => user.id === id);
+            // 編集対象のユーザーidをparsedから取得
+            const targetUserId = parsed.id;
+            // 編集対象のユーザーidと照合を行う
+            const targetUser = users.find(user => user.id === targetUserId);
             // 編集対象のユーザーがない場合、404を返す
             if (!targetUser) {
                 return sendJson(res, 404, { error: 'User not found' });
