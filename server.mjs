@@ -106,10 +106,7 @@ const server = http.createServer(async (req, res) => {
     try {
         const url = new URL(req.url, `http://${req.headers.host || `${HOST}:${PORT}`}`);
         const { pathname, searchParams } = url;
-        // urlパラメータ取得のための検証用
-        // const userIdMatch = pathname.match(/^\/users\/(\d+)$/);
-        // console.log('url確認:',userIdMatch);
-        // nullを返している
+        console.log('URL確認:',url);
 
         if (pathname === '/api/health' && req.method === 'GET'){
             return sendJson(res, 200, {
@@ -119,12 +116,8 @@ const server = http.createServer(async (req, res) => {
             });
         }
         if (pathname === '/api/users' && req.method === 'GET') {
-            console.log(searchParams.get('q'));
-            console.log(pathname);
-            console.log('編集フォーム送信時、このGETAPIを呼び出しているか確認')
             const users = await getUsers();
             const keyword = (searchParams.get('q') || '').toLowerCase();
-            console.log('クエリパラメーターの中身確認:',keyword);
             
             const filtered = keyword
             ? users.filter(user => 
@@ -161,9 +154,14 @@ const server = http.createServer(async (req, res) => {
         }
         // 更新API作成
         // サーバ側パス指定の検証用
-        // const pattern = new URLPattern({pathname: '/api/users/:id'});
-        // console.log(pattern.test('/api/users/user01'));
-        if (pathname === '/api/users' && req.method === 'PATCH'){
+        if (req.method === 'PATCH'){
+            // URLパターンの定義
+            const pattern = new URLPattern({pathname: '/api/users/:id'});
+            // URLが定義したパターンに一致するか検証
+            const match = pattern.exec({pathname: req.url});
+            // 検証結果として返されたオブジェクトからユーザーidを取得する
+            const getUserId = match.pathname.groups.id;
+            console.log('URLパターン定義からユーザーid取得:',getUserId);
             const body = await readBody(req);
             const parsed = JSON.parse(body || '{}');
             console.log('payloadデータ中身確認:',parsed);
@@ -174,8 +172,8 @@ const server = http.createServer(async (req, res) => {
             }
             // data/users.jsonよりユーザー情報を取得
             const users = await getUsers();
-            // 編集対象のユーザーidをparsedから取得
-            const targetUserId = parsed.id;
+            // 編集対象のユーザーidをURLのpathnameから取得
+            const targetUserId = getUserId;
             // 編集対象のユーザーidと照合を行う
             const targetUser = users.find(user => user.id === targetUserId);
             // 編集対象のユーザーがない場合、404を返す
