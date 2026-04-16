@@ -174,7 +174,7 @@ editForm.addEventListener('submit', async event => {
 
    try {
     // 更新API呼び出し_サーバーとの通信が発生する
-    const response = await fetch(`/api/users`, {
+    const response = await fetch(`/api/users/${encodeURIComponent(userId)}`, {
         method: 'PATCH',
         headers: {
                 'Content-Type': 'application/json'
