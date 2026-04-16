@@ -54,14 +54,22 @@ async function loadUsers() {
             // radioはnameでグループ化されて初めて機能する
             editCheckRadio.name = 'user-select';
             editCheckRadio.value = user.id;
+            // TODO. ユーザー情報が削除できるUI画面要素を作ろう
+            //　ユーザー情報を削除するためのcheckbox追加
+            const tdDelete = document.createElement('td');
+            const deleteCheckBox = document.createElement('input');
+            deleteCheckBox.type = 'checkbox';
+            deleteCheckBox.name = 'delete-select';
+            deleteCheckBox.value = user.id;
             
             editCheckRadio.addEventListener('click', () => {
                 console.log('編集対象ユーザーID:', user.id);
                 console.log('ユーザーIDが入っているか値確認:', editCheckRadio.value);
             });
             tdAction.appendChild(editCheckRadio);
+            tdDelete.appendChild(deleteCheckBox);
             //親要素である<tr>に、作成した子要素<td>を追加する
-            tr.append(tdName,tdEmail,tdAction);
+            tr.append(tdName,tdEmail,tdAction,tdDelete);
 
             return tr;
         }
