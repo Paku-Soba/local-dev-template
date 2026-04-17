@@ -107,6 +107,8 @@ const server = http.createServer(async (req, res) => {
         const url = new URL(req.url, `http://${req.headers.host || `${HOST}:${PORT}`}`);
         const { pathname, searchParams } = url;
         console.log('URL確認:',url);
+        // クエリパラメータは、ユーザーを検索する時確認できる
+        console.log(searchParams.get('q'));
 
         if (pathname === '/api/health' && req.method === 'GET'){
             return sendJson(res, 200, {
