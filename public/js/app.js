@@ -14,7 +14,9 @@ const editUserEmail = document.getElementById('edit-email');
 const editForm = document.getElementById('edit-user-form');
 const closeEditModalButton = document.getElementById('close-modal');
 //削除するモーダル関連要素
-const openEeleteModalButton = document.getElementById('open-delete-modal-button');
+const openDeleteModalButton = document.getElementById('open-delete-modal-button');
+const deleteModal = document.getElementById('delete-modal');
+
 
 
 //ユーザー情報を取得する機能
@@ -122,7 +124,7 @@ async function loadUsers() {
 
         // TODO. チェックボックスを選択したユーザー情報をモーダルダイアログに渡す
         // 削除するボタンをクリックするとモーダル表示する機能
-        openEeleteModalButton.addEventListener('click', () => {
+        openDeleteModalButton.addEventListener('click', () => {
             const selectDeletCheckBox = document.querySelector('input[name="delete-select"]:checked');
             console.log('選択したユーザーを確認:',selectDeletCheckBox);
 
@@ -130,6 +132,7 @@ async function loadUsers() {
                 alert('削除するユーザーを選択してください。');
                 return;
             }
+            deleteModal.showModal();
         })
 
     } catch (error) {
