@@ -41,8 +41,9 @@
                 <div id="data-status"></div>
                 <ul id="user-list"></ul>
                 <h3>TODO. ユーザー情報をテーブルで表示してみよう</h3>
-                <div style="display: flex; justify-content: flex-end;">
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
                     <button id="open-edit-modal-button">編集する</button>
+                    <button id="open-delete-modal-button" style="background-color: #B31B1B;">削除する</button>
                 </div>
                 <table>
                     <thead>
@@ -58,7 +59,7 @@
                 </table>
                 <dialog id="edit-modal">
                     <div style="display: flex; justify-content: flex-end;">
-                        <button id="close-modal">×</button>
+                        <button style="background-color: darkgray;" id="close-modal">×</button>
                     </div>
                     <h3>TODO.編集可能なフォームを作成しよう</h3>
                     <h2>メールアドレスの編集ができます。</h2>
@@ -77,6 +78,17 @@
                             <button id="edit-submit">保存</button>
                         </div>
                     </form>
+                </dialog>
+                <dialog id="delete-modal">
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button id="close-modal">×</button>
+                    </div>
+                    <h3>TODO.削除するユーザー情報が確認できる一覧を表示してみよう</h3>
+                    <h2>こちらのユーザー情報を削除しますか？</h2>
+                     <div style="display: flex; justify-content: center; gap: 10px;">
+                        <button style="background-color: darkgray;">いいえ</button>
+                        <button id="delete-submit">はい</button>
+                    </div>
                 </dialog>
                 <form>
                     <fieldset>
