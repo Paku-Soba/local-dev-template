@@ -13,6 +13,9 @@ const editUserName = document.getElementById('edit-name');
 const editUserEmail = document.getElementById('edit-email');
 const editForm = document.getElementById('edit-user-form');
 const closeEditModalButton = document.getElementById('close-modal');
+//削除するモーダル関連要素
+const openEeleteModalButton = document.getElementById('open-delete-modal-button');
+
 
 //ユーザー情報を取得する機能
 async function loadUsers() {
@@ -66,6 +69,10 @@ async function loadUsers() {
                 console.log('編集対象ユーザーID:', user.id);
                 console.log('ユーザーIDが入っているか値確認:', editCheckRadio.value);
             });
+            deleteCheckBox.addEventListener('click', () => {
+                console.log('削除対象ユーザーID:', user.id);
+                console.log('ユーザーIDが入っているか値確認:', deleteCheckBox.value);
+            })
             tdAction.appendChild(editCheckRadio);
             tdDelete.appendChild(deleteCheckBox);
             //親要素である<tr>に、作成した子要素<td>を追加する
@@ -112,6 +119,19 @@ async function loadUsers() {
             editUserEmail.value = seletedUser.email;
             editModal.showModal();
         })
+
+        // TODO. チェックボックスを選択したユーザー情報をモーダルダイアログに渡す
+        // 削除するボタンをクリックするとモーダル表示する機能
+        openEeleteModalButton.addEventListener('click', () => {
+            const selectDeletCheckBox = document.querySelector('input[name="delete-select":checked]');
+            console.log('選択したユーザーを確認:',selectDeletCheckBox);
+
+            if(!selectDeletCheckBox) {
+                alert('削除するユーザーを選択してください。');
+                return;
+            }
+        })
+
     } catch (error) {
         dataStatus.textContent = `取得失敗：${error.message}`;
     }
