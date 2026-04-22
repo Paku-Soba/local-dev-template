@@ -12,10 +12,11 @@ const editUserId = document.getElementById('edit-user-id');
 const editUserName = document.getElementById('edit-name');
 const editUserEmail = document.getElementById('edit-email');
 const editForm = document.getElementById('edit-user-form');
-const closeEditModalButton = document.getElementById('close-modal');
+const closeEditModalButton = document.getElementById('close-edit-modal');
 //削除するモーダル関連要素
 const openDeleteModalButton = document.getElementById('open-delete-modal-button');
 const deleteModal = document.getElementById('delete-modal');
+const closeDeleteModalButton = document.getElementById('close-delete-modal');
 
 
 
@@ -74,6 +75,8 @@ async function loadUsers() {
             deleteCheckBox.addEventListener('click', () => {
                 console.log('削除対象ユーザーID:', user.id);
                 console.log('ユーザーIDが入っているか値確認:', deleteCheckBox.value);
+                // TODO. 削除するユーザー情報を渡す方法検証する
+                console.log('checkBoxを選択したユーザー情報の名前とメールアドレス確認:',tdName,tdEmail);
             })
             tdAction.appendChild(editCheckRadio);
             tdDelete.appendChild(deleteCheckBox);
@@ -188,6 +191,10 @@ reloadButton.addEventListener('click',() => {
 closeEditModalButton.addEventListener('click',() => {
     editModal.close();
 });
+closeDeleteModalButton.addEventListener('click',() => {
+    deleteModal.close();
+});
+
 
 // TODO. モーダルダイアログの「保存」ボタンをクリックしたらユーザー情報を更新する
 // ユーザー情報を更新する機能
