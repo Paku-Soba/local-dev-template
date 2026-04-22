@@ -123,7 +123,7 @@ async function loadUsers() {
         // TODO. チェックボックスを選択したユーザー情報をモーダルダイアログに渡す
         // 削除するボタンをクリックするとモーダル表示する機能
         openEeleteModalButton.addEventListener('click', () => {
-            const selectDeletCheckBox = document.querySelector('input[name="delete-select":checked]');
+            const selectDeletCheckBox = document.querySelector('input[name="delete-select"]:checked');
             console.log('選択したユーザーを確認:',selectDeletCheckBox);
 
             if(!selectDeletCheckBox) {
