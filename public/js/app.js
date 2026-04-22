@@ -76,7 +76,7 @@ async function loadUsers() {
                 console.log('削除対象ユーザーID:', user.id);
                 console.log('ユーザーIDが入っているか値確認:', deleteCheckBox.value);
                 // TODO. 削除するユーザー情報を渡す方法検証する
-                console.log('checkBoxを選択したユーザー情報の名前とメールアドレス確認:',tdName,tdEmail);
+                console.log('checkBoxを選択したユーザー情報の名前とメールアドレス確認:',tdName.textContent,tdEmail.textContent);
             })
             tdAction.appendChild(editCheckRadio);
             tdDelete.appendChild(deleteCheckBox);
@@ -187,7 +187,7 @@ reloadButton.addEventListener('click',() => {
     loadUsers();
 });
 
-// モーダルを閉じる機能
+// TODO.モーダルを閉じる機能をまとめる　
 closeEditModalButton.addEventListener('click',() => {
     editModal.close();
 });
