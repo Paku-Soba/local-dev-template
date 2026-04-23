@@ -17,6 +17,10 @@ const closeEditModalButton = document.getElementById('close-edit-modal');
 const openDeleteModalButton = document.getElementById('open-delete-modal-button');
 const deleteModal = document.getElementById('delete-modal');
 const closeDeleteModalButton = document.getElementById('close-delete-modal');
+// 削除対象ユーザー情報格納用_変数宣言及び初期化
+let setUserName = "";
+let setUserEmail = "";
+
 
 
 
@@ -72,12 +76,14 @@ async function loadUsers() {
                 console.log('編集対象ユーザーID:', user.id);
                 console.log('ユーザーIDが入っているか値確認:', editCheckRadio.value);
             });
-            deleteCheckBox.addEventListener('click', (event) => {
+            deleteCheckBox.addEventListener('click', () => {
                 console.log('削除対象ユーザーID:', user.id);
                 console.log('ユーザーIDが入っているか値確認:', deleteCheckBox.value);
                 // TODO. 削除するユーザー情報を渡す方法検証する
                 console.log('checkBoxを選択したユーザー情報の名前とメールアドレス確認:',tdName.textContent,tdEmail.textContent);
-                getDeleteUser(event, tdName.textContent, tdEmail.textContent);
+                setUserName = tdName.textContent;
+                setUserEmail = tdEmail.textContent;
+                console.log('ユーザー名:',setUserName,'ユーザーメールアドレス:',setUserEmail);
             })
             tdAction.appendChild(editCheckRadio);
             tdDelete.appendChild(deleteCheckBox);
@@ -241,11 +247,4 @@ editForm.addEventListener('submit', async event => {
    editModal.close();
 })
 
-// TODO.削除対象のユーザー情報を渡すための関数を作成
-function getDeleteUser(e, deleteUserName, deleteUserEmail) {
-    console.log('ユーザー情報を渡す関数呼び出しができているか確認');
-    console.log(deleteUserName);
-    console.log(deleteUserEmail);
-    console.log(e.target);
-}
 loadUsers();
