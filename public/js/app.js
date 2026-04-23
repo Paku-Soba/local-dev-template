@@ -17,9 +17,12 @@ const closeEditModalButton = document.getElementById('close-edit-modal');
 const openDeleteModalButton = document.getElementById('open-delete-modal-button');
 const deleteModal = document.getElementById('delete-modal');
 const closeDeleteModalButton = document.getElementById('close-delete-modal');
+const deleteUserTableList = document.getElementById('user-delet-table');
 // 削除対象ユーザー情報格納用_変数宣言及び初期化
+let setUserId = "";
 let setUserName = "";
 let setUserEmail = "";
+let deleteUsers = [];
 
 
 
@@ -81,9 +84,8 @@ async function loadUsers() {
                 console.log('ユーザーIDが入っているか値確認:', deleteCheckBox.value);
                 // TODO. 削除するユーザー情報を渡す方法検証する
                 console.log('checkBoxを選択したユーザー情報の名前とメールアドレス確認:',tdName.textContent,tdEmail.textContent);
-                setUserName = tdName.textContent;
-                setUserEmail = tdEmail.textContent;
-                console.log('ユーザー名:',setUserName,'ユーザーメールアドレス:',setUserEmail);
+                deleteUsers.push({setUserId:deleteCheckBox.value,setUserName:tdName.textContent,setUserEmail:tdEmail.textContent}),
+                console.log('削除対象のユーザー情報を確認:',deleteUsers);
             })
             tdAction.appendChild(editCheckRadio);
             tdDelete.appendChild(deleteCheckBox);
@@ -135,13 +137,24 @@ async function loadUsers() {
         // TODO. チェックボックスを選択したユーザー情報をモーダルダイアログに渡す
         // 削除するボタンをクリックするとモーダル表示する機能
         openDeleteModalButton.addEventListener('click', () => {
-            const selectDeletCheckBox = document.querySelector('input[name="delete-select"]:checked');
-            console.log('選択したユーザーを確認:',selectDeletCheckBox);
-
-            if(!selectDeletCheckBox) {
-                alert('削除するユーザーを選択してください。');
-                return;
+            // TODO.配列の中に格納したデータの取り出しを行う
+            for (const deleteUser of deleteUsers) {
+                console.log('配列の中のオブジェクトデータ取得確認:',deleteUser.setUserId);
+                if (!deleteUser.setUserId){
+                    alert('削除するユーザーを選択してください。')
+                    return;
+                }
             }
+            // 削除対象のユーザー情報をHTMLテーブル要素に反映する
+            const tr = document.createElement('tr');
+            tr.dataset.id = setUserId;
+
+            const tdUserName = document.createElement('td');
+            tdUserName.textContent = setUserName;
+
+            const tdUserEmail = document.createElement('td');
+            tdUserEmail.textContent = setUserEmail;
+            //DOMへの反映必要
             deleteModal.showModal();
         })
 
