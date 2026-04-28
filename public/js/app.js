@@ -18,6 +18,7 @@ const openDeleteModalButton = document.getElementById('open-delete-modal-button'
 const deleteModal = document.getElementById('delete-modal');
 const closeDeleteModalButton = document.getElementById('close-delete-modal');
 const deleteUserTableList = document.getElementById('user-delet-table');
+const deleteButton = document.getElementById('delete-submit');
 // 削除対象ユーザー情報格納用_変数宣言及び初期化
 let setUserId = "";
 let setUserName = "";
@@ -256,7 +257,7 @@ editForm.addEventListener('submit', async event => {
     await loadUsers();
    } catch (error) {
     console.log(error)
-    alert(`編集に失敗しました。: ${error.message}`);
+    alert(`ユーザー情報の編集ができませんでした。: ${error.message}`);
 
    }
    // 更新フォームの値をクリアする
@@ -265,6 +266,37 @@ editForm.addEventListener('submit', async event => {
    const editCheckRadios = document.querySelectorAll('input[name="user-select"]');
    editCheckRadios.forEach(radio => radio.checked = false);
    editModal.close();
+})
+
+// TODO. 削除モーダルダイアログの「はい」ボタンをクリックしたらユーザー情報を削除する
+deleteButton.addEventListener('click', async event => {
+    console.log('削除対象ユーザー情報_イベント呼び出し確認');
+    event.preventDefault();
+    const payload = deleteUsers;
+    console.log('削除するイベント発火確認_削除するユーザー情報確認:',payload);
+
+    try{
+    //　削除API呼び出し_サーバーとの通信が発生する
+    const response = await fetch(`/api/users/${encodeURIComponent(userId)}`, {
+        method: 'DELETE',
+        headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+    });
+    const deleteResult = await response.json();
+    //レスポンス内容を明示的に確認
+    console.log('DELETE response:', deleteResult);
+    console.log('response.ok:', response.ok, 'status:',response.status);
+        
+    } catch (error) {
+        console.log(error);
+        alert(`ユーザー情報を削除できませんでした。:${error.message}`);
+    }
+    const deleteCheckBox = document.querySelectorAll('input[name="delete-select"]');
+    deleteCheckBox.forEach(checkBox => checkBox.checked = false);
+    deleteModal.close();
+    alert(`ユーザー情報を削除できたよ♪`);
 })
 
 loadUsers();
