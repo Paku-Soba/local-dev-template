@@ -101,6 +101,15 @@ async function saveUsers(users) {
     await fs.writeFile(filePath, JSON.stringify(users, null, 2 ), 'utf-8');
 }
 
+// TODO. users.jsonから削除対象のデータを削除する関数作成
+async function deleteUser(deletUsers) {
+    const filePath = path.join(DATA_DIR, 'users.json');
+    const raw = await fs.readFile(filePath, 'utf-8');
+    // JSONファイルの中からデータを削除する処理追加
+    delete JSON.parse(deletUsers);
+    
+}
+
 // node標準機能を使ってサーバー構築
 const server = http.createServer(async (req, res) => {
     try {
@@ -191,6 +200,29 @@ const server = http.createServer(async (req, res) => {
             return sendJson(res, 200, targetUser);
 
         }
+        // TODO.削除API作成
+        if (req.method === 'DELETE') {
+            const pattern = new  URLPattern({pathname: '/api/users/:id'});
+            const match = pattern.exec({pathname: req.url});
+            const getUserId = match.pathname.groups.id;
+            console.log('URLパターン定義からユーザーid取得:',getUserId);
+            const body = await readBody(req);
+            const parsed = JSON.parse(body || '{}');
+            // 削除対象のユーザー情報をid以外に渡す必要があるのか？
+            console.log('payloadデータ中身確認:', parsed);
+
+            const users = await getUsers();
+            const targetUserId = getUserId;
+            const targetUser  = users.find(user => user.id === targetUserId);
+            console.log('指定したidのユーザーが存在するか確認',targetUser)
+
+            // 削除対象のユーザーがあるか、JSONファイルにて確認
+            if (!targetUser) {
+                return sendJson(res, 404, { error: 'User not found'});
+            }
+            // 削除対象のユーザーが存在する場合、ユーザー情報を削除する
+            deleteUser(targetUser)
+        }
         return serveStaticFile(res, pathname);
     } catch(error) {
         console.error(error);
@@ -200,6 +232,8 @@ const server = http.createServer(async (req, res) => {
         });
     }
 });
+
+
 
 server.listen(PORT, HOST, () => {
     console.log(`Server running at http://${HOST}:${PORT}`);
