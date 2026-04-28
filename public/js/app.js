@@ -272,12 +272,17 @@ editForm.addEventListener('submit', async event => {
 deleteButton.addEventListener('click', async event => {
     console.log('削除対象ユーザー情報_イベント呼び出し確認');
     event.preventDefault();
-    const payload = deleteUsers;
+    for (const deleteUser of deleteUsers) {
+    const payload = {
+        id: deleteUser.setUserId,
+        name: deleteUser.setUserName,
+        email: deleteUser.setUserEmail
+    };
     console.log('削除するイベント発火確認_削除するユーザー情報確認:',payload);
 
     try{
     //　削除API呼び出し_サーバーとの通信が発生する
-    const response = await fetch(`/api/users/${encodeURIComponent(userId)}`, {
+    const response = await fetch(`/api/users/${encodeURIComponent(deleteUser.setUserId)}`, {
         method: 'DELETE',
         headers: {
                 'Content-Type': 'application/json'
@@ -292,6 +297,7 @@ deleteButton.addEventListener('click', async event => {
     } catch (error) {
         console.log(error);
         alert(`ユーザー情報を削除できませんでした。:${error.message}`);
+    }
     }
     const deleteCheckBox = document.querySelectorAll('input[name="delete-select"]');
     deleteCheckBox.forEach(checkBox => checkBox.checked = false);
