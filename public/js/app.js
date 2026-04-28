@@ -137,6 +137,7 @@ async function loadUsers() {
         // TODO. チェックボックスを選択したユーザー情報をモーダルダイアログに渡す
         // 削除するボタンをクリックするとモーダル表示する機能
         openDeleteModalButton.addEventListener('click', () => {
+            const fragment = document.createDocumentFragment();
             // TODO.配列の中に格納したデータの取り出しを行う
             for (const deleteUser of deleteUsers) {
                 console.log('配列の中のオブジェクトデータ取得確認:',deleteUser.setUserId);
@@ -144,17 +145,23 @@ async function loadUsers() {
                     alert('削除するユーザーを選択してください。')
                     return;
                 }
+                // TODO.削除対象のユーザー情報をHTMLテーブル要素に反映する
+                const tr = document.createElement('tr');
+                tr.dataset.id = deleteUser.setUserId;
+
+                const tdUserName = document.createElement('td');
+                tdUserName.textContent = deleteUser.setUserName;
+
+                const tdUserEmail = document.createElement('td');
+                tdUserEmail.textContent = deleteUser.setUserEmail;
+
+                tr.append(tdUserName,tdUserEmail);
+                console.log('trの中身確認:',tr);
+                fragment.appendChild(tr);    
             }
-            // 削除対象のユーザー情報をHTMLテーブル要素に反映する
-            const tr = document.createElement('tr');
-            tr.dataset.id = setUserId;
-
-            const tdUserName = document.createElement('td');
-            tdUserName.textContent = setUserName;
-
-            const tdUserEmail = document.createElement('td');
-            tdUserEmail.textContent = setUserEmail;
-            //DOMへの反映必要
+            // HTMLテーブル要素に追加した内容をDOMへ反映
+            deleteUserTableList.innerHTML= '';
+            deleteUserTableList.appendChild(fragment);
             deleteModal.showModal();
         })
 
