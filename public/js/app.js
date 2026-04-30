@@ -273,6 +273,12 @@ deleteButton.addEventListener('click', async event => {
     console.log('削除対象ユーザー情報_イベント呼び出し確認');
     event.preventDefault();
     for (const deleteUser of deleteUsers) {
+    const payload = {
+        id: deleteUser.setUserId,
+        name: deleteUser.setUserName,
+        email: deleteUser.setUserEmail
+    };
+    console.log('削除するイベント発火確認_削除するユーザー情報確認:',payload);
 
     try{
     //　削除API呼び出し_サーバーとの通信が発生する
@@ -281,6 +287,7 @@ deleteButton.addEventListener('click', async event => {
         headers: {
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify(payload)
     });
     const deleteResult = await response.json();
     //レスポンス内容を明示的に確認

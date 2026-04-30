@@ -106,9 +106,8 @@ async function deleteUser(deletUsers) {
     const filePath = path.join(DATA_DIR, 'users.json');
     const raw = await fs.readFile(filePath, 'utf-8');
     // JSONファイルの中からデータを削除する処理追加
-    console.log('ファイル読み込み内容確認:',raw)
-    const updatedUserData = JSON.parse(raw).filter(user => user.id !== deletUsers);
-    await fs.writeFile(filePath, JSON.stringify(updatedUserData, null, 2), 'utf-8');
+    delete JSON.parse(deletUsers);
+    
 }
 
 // node標準機能を使ってサーバー構築
@@ -213,7 +212,8 @@ const server = http.createServer(async (req, res) => {
             console.log('payloadデータ中身確認:', parsed);
 
             const users = await getUsers();
-            const targetUser  = users.find(user => user.id === getUserId);
+            const targetUserId = getUserId;
+            const targetUser  = users.find(user => user.id === targetUserId);
             console.log('指定したidのユーザーが存在するか確認',targetUser)
 
             // 削除対象のユーザーがあるか、JSONファイルにて確認
@@ -221,8 +221,7 @@ const server = http.createServer(async (req, res) => {
                 return sendJson(res, 404, { error: 'User not found'});
             }
             // 削除対象のユーザーが存在する場合、ユーザー情報を削除する
-            await deleteUser(getUserId);//呼び出しできている
-            return sendJson(res, 200,  { message: 'Userdata deleted successfully'})
+            deleteUser(targetUser)
         }
         return serveStaticFile(res, pathname);
     } catch(error) {
@@ -233,6 +232,8 @@ const server = http.createServer(async (req, res) => {
         });
     }
 });
+
+
 
 server.listen(PORT, HOST, () => {
     console.log(`Server running at http://${HOST}:${PORT}`);
