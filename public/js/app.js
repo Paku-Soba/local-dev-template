@@ -286,16 +286,19 @@ deleteButton.addEventListener('click', async event => {
     //レスポンス内容を明示的に確認
     console.log('DELETE response:', deleteResult);
     console.log('response.ok:', response.ok, 'status:',response.status);
-        
+    if (!response.ok) {
+        throw new Error (deleteResult.error || 'ユーザー情報の削除ができませんでした。')
+        }
     } catch (error) {
         console.log(error);
-        alert(`ユーザー情報を削除できませんでした。:${error.message}`);
+        alert(`ユーザー情報の削除ができませんでした。:${error.message}`);
     }
     }
     const deleteCheckBox = document.querySelectorAll('input[name="delete-select"]');
     deleteCheckBox.forEach(checkBox => checkBox.checked = false);
     deleteModal.close();
     alert(`ユーザー情報を削除できたよ♪`);
+    await loadUsers();
 })
 
 loadUsers();
